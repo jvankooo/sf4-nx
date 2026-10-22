@@ -1,0 +1,66 @@
+#version 450
+
+// Stencil of a depth->depth EDRAM import for the copy engine: one byte per pixel of a 1x destination
+// rectangle into a buffer, then vkCmdCopyBufferToImage(STENCIL aspect) writes it. Replaces the 8
+// stencil-bit draw passes (Maxwell has no shader stencil export, and each masked stencil pass costs as
+// much as a full one). Addressing is identical to me_edram_depth_to_depth.frag (1x source) and
+// me_edram_depth_msaa2_to_depth_1x.frag (2x source, SOURCE_MSAA2). Destination: 1x, no 40-column swap.
+layout(local_size_x = 8, local_size_y = 8) in;
+#ifdef SOURCE_MSAA2
+layout(set = 0, binding = 0) uniform usampler2DMS source_stencil;
+#else
+layout(set = 0, binding = 0) uniform usampler2D source_stencil;
+#endif
+layout(std430, set = 0, binding = 1) writeonly buffer Output { uint words[]; };
+layout(push_constant) uniform Constants {
+  uvec2 source_size;
+  uint pitch_tiles_source;
+  uint pitch_tiles_target;
+  uint tile_source_start;
+  uint tile_target_start;
+  uint tiles_count;
+  uint source_msaa_x, source_msaa_y;
+  uint rect_x, rect_y, rect_w, rect_h;  // destination pixels; rect_w is a multiple of 4
+} c;
+
+// EDRAM address math without IMUL (docs/edram-shader-imul.md; exactness: tests/cpu/test_native_edram_imul_free.cpp).
+// NAK on SM50 emits the microcoded, variable-latency IMUL for every 32-bit multiply that is not by a power of two,
+// IMUL.HI for a division by a constant and a long IMUL sequence for a division by a register. Integers below 2^24
+// are exact in float, so these use FMUL/FFMA and conversions instead:
+// - DivPitch: tile < 2^16, 1 <= pitch <= 2048; the fraction of (tile + 0.5) / pitch is at least 0.5 / pitch away
+//   from an integer, far more than the error of the reciprocal, so the float quotient floors to the integer one;
+// - MulSmall: a * b < 2^24 (row * pitch, quotient * pitch);
+// - Div80 / Mod80: x < 2^20; Mul80 is two shifts and an add.
+uint DivPitch(uint tile, uint pitch) { return uint((float(tile) + 0.5) / float(pitch)); }
+uint MulSmall(uint a, uint b) { return uint(float(a) * float(b)); }
+uint ModPitch(uint tile, uint pitch) { return tile - MulSmall(DivPitch(tile, pitch), pitch); }
+uint Div80(uint x) { return uint(fma(float(x), 0.0125, 0.00625)); }
+uint Mul80(uint x) { return (x << 6u) + (x << 4u); }
+uint Mod80(uint x) { return x - Mul80(Div80(x)); }
+
+uint Stencil(uvec2 pixel) {
+  uint tile = MulSmall(pixel.y >> 4u, c.pitch_tiles_target) + Div80(pixel.x);
+  if (tile < c.tile_target_start || tile - c.tile_target_start >= c.tiles_count) return 0u;
+  uint source_tile = c.tile_source_start + tile - c.tile_target_start;
+  uvec2 source_physical = uvec2(Mul80(ModPitch(source_tile, c.pitch_tiles_source)) + Mod80(pixel.x),
+                               DivPitch(source_tile, c.pitch_tiles_source) * 16u + pixel.y % 16u);
+#ifdef SOURCE_MSAA2
+  ivec2 source_pixel = ivec2(source_physical.x, source_physical.y / 2u);
+  if (any(greaterThanEqual(uvec2(source_pixel), c.source_size))) return 0u;
+  return texelFetch(source_stencil, source_pixel, int((source_physical.y & 1u) ^ 1u)).r & 255u;
+#else
+  uvec2 source_pixel = source_physical >> uvec2(c.source_msaa_x, c.source_msaa_y);
+  if (any(greaterThanEqual(source_pixel, c.source_size))) return 0u;
+  return texelFetch(source_stencil, ivec2(source_pixel), 0).r & 255u;
+#endif
+}
+
+void main() {
+  uvec2 id = gl_GlobalInvocationID.xy;
+  uint words_per_row = c.rect_w / 4u;
+  if (id.x >= words_per_row || id.y >= c.rect_h) return;
+  uvec2 pixel = uvec2(c.rect_x + id.x * 4u, c.rect_y + id.y);
+  uint word = Stencil(pixel) | (Stencil(pixel + uvec2(1u, 0u)) << 8u) |
+              (Stencil(pixel + uvec2(2u, 0u)) << 16u) | (Stencil(pixel + uvec2(3u, 0u)) << 24u);
+  words[MulSmall(id.y, words_per_row) + id.x] = word;
+}

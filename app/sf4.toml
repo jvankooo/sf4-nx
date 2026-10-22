@@ -1,0 +1,121 @@
+# ============================================================================
+#  SF4 Recomp - runtime configuration
+#
+#  Read at startup from the executable's folder (sdmc:/switch/sf4-nx/sf4.toml on the Switch).
+#  The name is the app's ("sf4"), not the NRO's. Command-line arguments take precedence.
+#  The SDK comes from masseffect-nx: its settings named masseffect_* are the SDK's, not Mass Effect's.
+# ============================================================================
+
+# Graphics: the native renderer (from masseffect-nx) reads the game's GPU commands and draws them with Vulkan.
+# It needs sf4_shaders.mesp and sf4_shaders.mesp.idx next to the NRO (tools/build_shader_library.py makes them from
+# the disc). false = the SDK's Xenos GPU emulation below, about 4-5 fps in fights on the console.
+masseffect_renderer_native = true
+gpu_plugin = "xenos"
+
+# Native renderer settings for SF4 (sf4_app.h sets the same when this file does not):
+#   EDRAM mode 0: one image per render target, no copies between views of the same EDRAM bytes. SF4 clears or
+#   redraws each target before reading it; Direct3D's clears through 4x views are redrawn on the surface they stand
+#   for (sf4_native_msaa4_views). Modes 1-3 leave a one-pixel seam at 720p, mode 4 rejects SF4's surfaces.
+#   sf4_native_msaa_off: the scene is drawn without multisampling (the game asks for 2x at 720p, 4x at 480p).
+#   skip_prepass and postponed_sky are Mass Effect shortcuts keyed on its own passes.
+masseffect_native_edram_alias_mode = 0
+sf4_native_msaa_off = true
+masseffect_native_skip_prepass = false
+masseffect_native_postponed_sky = false
+
+# Native renderer speed, the settings masseffect-nx ships (its app/masseffect.toml), all exact (the same image) and
+# off in the code by default. The console's first native run (2026-10-22) had the ring thread at 52 % of a core
+# for 15 drawn frames per second, about 47 us per draw against Mass Effect's 8.5 with these on.
+#   Vulkan recording on a worker thread instead of the ring thread:
+masseffect_native_deferred_recording = true
+masseffect_native_deferred_recording_naps = 8
+masseffect_deferred_native_fast = true
+masseffect_deferred_native_batch = 16
+masseffect_deferred_native_update = true
+#   Parsing, pairing and shader identity:
+masseffect_native_pm4_fast = true
+masseffect_native_fast_pair = true
+masseffect_native_flat_identity = true
+masseffect_native_raw_microcode = true
+masseffect_native_load_memo = true
+masseffect_native_load_memo_generation = true
+masseffect_native_compare_fast = true
+#   Constants, vertices, indices and textures:
+masseffect_native_constants_dirty = true
+masseffect_native_constants_same_content = true
+masseffect_native_vertex_arena = true
+masseffect_native_fast_copy = true
+masseffect_native_fast_copy_verify = 256
+masseffect_native_indices_cache = true
+masseffect_native_fingerprint_mode = 1
+masseffect_native_dedupe_max_fingerprint = 16384
+masseffect_native_dedupe_hash_after_copy = true
+masseffect_native_fingerprints_skip_unused_sample = true
+masseffect_native_texture_inval_by_address = true
+masseffect_native_texture_spread_phase = true
+masseffect_native_texture_interval_max = 4
+#   Self-check of the switches above for their first uses (a difference logs DIFFERENCE and turns that one off):
+masseffect_native_verify_n = 2048
+#   Pipelines: the list of the pipelines used, saved in cache/, is compiled again in the background at start-up.
+masseffect_native_pipelines_prewarm = true
+masseffect_native_pipelines_prewarm_threads = 2
+masseffect_nvk_cache_per_stage = true
+indirect_dispatch_hot_cache = true
+
+# Mass Effect's disc-swap movie redirect (Movies\*.bik placeholders -> Layer0\Movies\BWLogo.bik). SF4 has no such
+# files; off so it can never redirect anything.
+masseffect_skip_disc_swap = false
+
+# Frame rate. SF4's game logic is one step per frame at 60 steps per second, so a slower frame rate would slow the
+# fights down.
+#   sf4_frame_rate = 30 (default): the picture at 30 frames per second and two game steps per frame, so the game
+#   keeps 60 steps per second (full speed) and only every other step is drawn and presented. A frame that runs long
+#   gets up to sf4_max_steps_per_frame steps, so the game never slows down; the picture drops a frame instead.
+#   sf4_frame_rate = 60: one step per frame as the game does; then sf4_draw_every_n_frames (1 = 60 fps, 2 = draw
+#   every other frame) applies. That mode needs about 60 full frames per second from the CPU, which the Switch could
+#   not do in fights (37-43).
+sf4_frame_rate = 30
+sf4_max_steps_per_frame = 4
+sf4_draw_every_n_frames = 2
+
+# Resolution the game renders at (scaled to the screen). SF4 sizes its 3D scene and effects from the video mode the
+# console reports, and the GPU time follows the pixel count: 854x480 is 45 % of the pixels of 1280x720 (its 3D scene
+# is 640x480), 640x360 is 25 %.
+# 854x480 is the default: the first native console run (854x480) measured the GPU at about 13 ms of work per Swap,
+# 26 ms per drawn frame, two thirds of it the 3D scene. At 1280x720 the scene has 2.25 times the pixels, about
+# 45-50 ms per drawn frame against the 33 ms of 30 fps: the GPU then holds the game back (fights in slow motion).
+# 1280 x 720 is sharper and works, but not at full speed in fights yet.
+video_mode_width = 854
+video_mode_height = 480
+
+# CPU. In fights the game's main thread is what limits the speed (console run 3: 75 % of a core, about 21 ms per game
+# frame against the 16.7 of 60 Hz, sharing its core with the GPU ring thread, which has a higher priority).
+#   sf4_exclusive_core: the main thread gets this core (0-2) to itself and every other thread moves off it; -1 = off.
+#   sf4_stack_sampling: diagnosis only, costs some speed. The log logs/rex/rex_profile.log then shows where each thread
+#   spends its time; turn it on for one run if fights are still slow and send the logs.
+sf4_exclusive_core = 2
+sf4_stack_sampling = false
+
+# Controller vibration (Joy-Con HD rumble, Pro Controller). input_rumble: the SDK passes the game's vibration to the
+# pads (false = always zero). sf4_vibration_always: SF4's default button configuration has vibration off, so a save
+# never rumbles until it is turned on there; true = on for both players whatever that setting says, false = the
+# in-game setting decides (as on the Xbox 360). input_rumble_dynamic: the Joy-Con pitch follows the motor speed.
+input_rumble = true
+sf4_vibration_always = true
+input_rumble_dynamic = true
+
+# The two settings below are for the Xenos emulation only (masseffect_renderer_native = false).
+# Character select at 1-2 fps on the console (2026-10-22): its post-processing draws into many render targets at
+# the same EDRAM addresses, and before each one the emulation copied what the previous one left there. For a
+# depth / stencil buffer that copy is nine draws on the Switch (one for depth, eight for the stencil bits): 119 copy
+# draws per frame at the character select. SF4 clears or rewrites its depth before testing against it, so the depth
+# copies are skipped (on the PC the character select is pixel-identical and fights look the same).
+# The color copies must stay on: without them the fight HUD's opponent portrait is drawn over stale contents.
+render_target_depth_transfers = false
+render_target_color_transfers = true
+
+# SDK settings masseffect-nx ships on, game independent:
+#   log_nonblocking   threads that log never touch the SD card (a lock-free ring and a writer thread)
+#   heap_free_bitmap  guest page allocation searches a free-page bitmap; same addresses as the page-table scan
+log_nonblocking = true
+heap_free_bitmap = true

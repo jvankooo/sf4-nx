@@ -1,0 +1,195 @@
+# ============================================================================
+#  SF4 Recomp - manual declarations for the codegen
+#
+#  Included from sf4_manifest.toml via includes = ["overrides.toml"].
+#  Included files use the flat schema (sections at the root).
+#
+#  Image: base 0x82000000, 8,060,928 bytes (valid range 0x82000000 - 0x827B0000),
+#  code 0x820C0000 - 0x824E3CC4, entry point 0x822B0FE8.
+#
+#  The register-localization options (cr/xer/ctr/non_volatile/non_argument_as_local, see masseffect-nx's
+#  perf_overrides.toml) are left off for this first pass: turn them on once the game runs, and check with
+#  tools/read_before_write.py which functions need share_registers.
+#
+#  Gaps: declaring every gap tools/find_gaps.py lists (what nfsmw-nx did) broke this game's analysis: some
+#  gaps are data, the analysis decoded their words as branches and split real functions, and the result
+#  changed from run to run. Only entries with evidence go here: tools/gap_fixpoint.py (self-contained leaves
+#  and thunks) and tools/runtime_gap_resolver.py (an address the game called and that lies in a gap).
+# ============================================================================
+
+[functions]
+
+# Structural gap scan, fixpoint pass 9 (tools/gap_fixpoint.py).
+"0x823B2F88" = { }
+
+# Structural gap scan, fixpoint pass 8 (tools/gap_fixpoint.py).
+"0x823B2F68" = { }
+
+# Structural gap scan, fixpoint pass 7 (tools/gap_fixpoint.py).
+"0x823B2F48" = { }
+
+# Structural gap scan, fixpoint pass 6 (tools/gap_fixpoint.py).
+"0x823AE878" = { }
+"0x823AE8D8" = { }
+"0x823B2F28" = { }
+"0x823E73E8" = { }
+
+# Structural gap scan, fixpoint pass 5 (tools/gap_fixpoint.py).
+"0x8236BA7C" = { }
+"0x823AE870" = { }
+"0x823AE8D0" = { }
+"0x823B2F08" = { }
+"0x823E73E0" = { }
+
+# Structural gap scan, fixpoint pass 4 (tools/gap_fixpoint.py).
+"0x82323320" = { }
+"0x8236BA6C" = { }
+"0x823AE868" = { }
+"0x823AE888" = { }
+"0x823AE8C8" = { }
+"0x823B2EE8" = { }
+"0x823D648C" = { }
+"0x823E73CC" = { }
+"0x823E73FC" = { }
+
+# Structural gap scan, fixpoint pass 3 (tools/gap_fixpoint.py).
+"0x82323318" = { }
+"0x8236BA8C" = { }
+"0x8236BAAC" = { }
+"0x823AE880" = { }
+"0x823AE898" = { }
+"0x823AE8C0" = { }
+"0x823B2EC8" = { }
+"0x823D6470" = { }
+"0x823E73F0" = { }
+"0x823E7414" = { }
+"0x823E7450" = { }
+
+# Structural gap scan, fixpoint pass 2 (tools/gap_fixpoint.py).
+"0x82297618" = { }
+"0x82323310" = { }
+"0x82346AA0" = { }
+"0x8236BA9C" = { }
+"0x823AE890" = { }
+"0x823AE8B8" = { }
+"0x823B2EA8" = { }
+"0x823D6454" = { }
+"0x823E7408" = { }
+"0x823E7444" = { }
+"0x823642B0" = { }
+
+# Structural gap scan, fixpoint pass 1 (tools/gap_fixpoint.py).
+"0x8223E880" = { }
+"0x82296490" = { }
+"0x822975D8" = { }
+"0x82297610" = { }
+"0x82323308" = { }
+"0x82346AB0" = { }
+"0x82364298" = { }
+"0x8236BABC" = { }
+"0x8236BADC" = { }
+"0x8236BFF0" = { }
+"0x823AE8A0" = { }
+"0x823AE8B0" = { }
+"0x823B2E88" = { }
+"0x823D6438" = { }
+"0x823E7420" = { }
+"0x823E7438" = { }
+
+# Structural gap scan, fixpoint pass 1 (tools/gap_fixpoint.py).
+"0x820CC648" = { }
+"0x820CCDF8" = { }
+"0x820EDE28" = { }
+"0x821013D8" = { }
+"0x8210BA38" = { }
+"0x82113060" = { }
+"0x82113088" = { }
+"0x82116AA0" = { }
+"0x82131FB0" = { }
+"0x82153E80" = { }
+"0x82198BF0" = { }
+"0x8219CAB8" = { }
+"0x821A3BE8" = { }
+"0x821A6608" = { }
+"0x821AED58" = { }
+"0x821B4658" = { }
+"0x821B50A8" = { }
+"0x821B5750" = { }
+"0x821B5BA0" = { }
+"0x821D40A8" = { }
+"0x821DC2E0" = { }
+"0x821E01B0" = { }
+"0x821EC798" = { }
+"0x821EFD30" = { }
+"0x821F23F0" = { }
+"0x82208678" = { }
+"0x82208F10" = { }
+"0x8223E868" = { }
+"0x82258A98" = { }
+"0x82258B68" = { }
+"0x82268030" = { }
+"0x8226A0D0" = { }
+"0x8228C5F0" = { }
+"0x8228D520" = { }
+"0x82296488" = { }
+"0x822964A8" = { }
+"0x82296558" = { }
+"0x822975D0" = { }
+"0x82297608" = { }
+"0x82297638" = { }
+"0x822CF590" = { }
+"0x822DFAF0" = { }
+"0x822FB5DC" = { }
+"0x822FF340" = { }
+"0x8230AAE0" = { }
+"0x82312D94" = { }
+"0x8231D078" = { }
+"0x8231D1A0" = { }
+"0x8231FEDC" = { }
+"0x823232F8" = { }
+"0x823257F8" = { }
+"0x82334410" = { }
+"0x82334428" = { }
+"0x82335BC0" = { }
+"0x82346AAC" = { }
+"0x82347324" = { }
+"0x8234E410" = { }
+"0x823560DC" = { }
+"0x82364280" = { }
+"0x8236BACC" = { }
+"0x8236BFD0" = { }
+"0x823A7F98" = { }
+"0x823AE8A8" = { }
+# "0x823AEAEC" (716 bytes) and "0x823AEF00" (712 bytes) were accepted by gap_fixpoint.py pass 1 but are the tails
+# of sub_823AE8E0 and sub_823AEE60: declared alone they left 13 branches unresolved. Not declared.
+"0x823B09D0" = { }
+"0x823B2A50" = { }
+"0x823B2CC8" = { }
+"0x823B2CE8" = { }
+"0x823B2E68" = { }
+"0x823B47C8" = { }
+"0x823B4A80" = { }
+"0x823B4AB0" = { }
+"0x823B9FD8" = { }
+"0x823D632C" = { }
+"0x823E742C" = { }
+"0x8240F014" = { }
+"0x8229C038" = { }
+"0x8229C080" = { }
+"0x8231B6A0" = { }
+
+# Code pointers stored in data that land in gaps (tools/pointer_scan.py on an SF4_DUMP_IMAGE dump, 2026-10-22).
+# 0x82201BB8 is referenced from 0x8209BC20; 0x822B5F9C, 0x822B5FAC and 0x822B5FB8 from a table at
+# 0x820A2268-0x820A2278 (three entries of the 68-byte gap at 0x822B5F8C): SEH funclets of sub_822B5788 (mr r8,r8
+# markers, frame through r31, return through __restgpr), the table is its scope table. They read r31 from the
+# context: with non_volatile_as_local on they would need share_registers. The other hits of the scan are the
+# import thunk table at 0x82489484, referenced by the import directory: not code to declare.
+"0x82201BB8" = { }
+"0x822B5F9C" = { }
+"0x822B5FAC" = { }
+"0x822B5FB8" = { }
+
+# Tail-call targets (b, not bl) that the analyzer left outside every function: the codegen fails with
+# "UnresolvedCall ... target not in any function" until they are declared. Bounds found by the analyzer.
+"0x822935B0" = {}   # reached from 0x822964CC
+"0x823A5BF8" = {}   # reached from 0x8223E964

@@ -1,0 +1,95 @@
+# Code generation options for speed, as masseffect-nx's app/perf_overrides.toml. Root keys: they must stay outside
+# any table. They only change how the C++ is written, so the aarch64 compiler keeps the guest registers in host
+# registers and drops dead stores; the guest-visible result is the same. Mass Effect measured about 13 % fewer
+# instructions and its main thread 32.4 -> 29.1 ms (-10 %) with all of them.
+#
+# The console's first native run (2026-10-22) had SF4's game thread at about 20 ms per game frame in fights against
+# 16.7 for full speed: these are part of getting it there.
+
+# Guest registers as C++ locals instead of fields of the PPCContext in memory.
+cr_as_local = true
+non_volatile_as_local = true
+# The guest's setjmp (sub_82380B80, saves f14-f31/r13-r31 into a jmp_buf) and longjmp (sub_82380640): with the
+# non-volatile registers as locals, a guest longjmp cannot restore the caller's locals, so both become host
+# setjmp/longjmp (the SDK saves and restores the PPCContext around it).
+setjmp_address = 0x82380B80
+longjmp_address = 0x82380640
+xer_as_local = true
+ctr_as_local = true
+# r0, r2, r11, r12, f0 and v32-v63 as locals too (synced around calls to share_registers callees).
+non_argument_as_local = true
+
+# Off, as in Mass Effect (no measurable gain on top of the locals there).
+args_in_registers = false
+
+# No mfmsr/mtmsrd fences, ctx.msr stores or global lock around the guest atomic sequences, and the lwarx/stwcx
+# reservation in a C++ local.
+# History: console run 2 (2026-10-23, skip_msr on) had fights at 5 Swaps per second. SF4's five job workers poll the
+# job queue's atomic exchange without pause while the last jobs run; the global lock had made them sleep in the kernel
+# (console run 1: 10 % of a core each), without it they took 55 % each of the 3 cores and starved the main thread.
+# src/sf4_jobs.cpp now makes those polls give the CPU back (sf4_job_wait_yield), so the lock is not needed for that.
+# On again (run 6 had the main thread blocked 22 % of the time): the lock is the SDK's global_critical_region, also
+# taken by the SDK's audio system, file system and kernel objects, and every guest atomic sequence of every thread took
+# it twice. If the job workers ever show 50 % of a core each again, sf4_job_wait_yield is off or another poll loop
+# appeared.
+skip_msr = true
+reserved_as_local = true
+
+# No `ctx.lr = <ret>;` before calls. No hook of this port compares ctx.lr, so no return address is kept
+# (src/sf4_d3d_trace.cpp reads callers only in the PC trace build, which is not generated with this file).
+elide_lr_stores = true
+lr_keep_returns = []
+# D-form loads/stores as base + zext(reg) + disp (differs only when reg+disp crosses 2^32).
+dform_disp_split = true
+# fctiwz as fcvtzs + NaN select.
+fctiwz_inline = true
+# dcbt / dcbtst as a host prefetch of the same address (PRFM never faults).
+dcbt_prefetch = true
+
+# share_registers only for the functions tools/read_before_write.py proves read a register their caller set (stack
+# probes taking their size in r12, fragments entered with a jump, SEH funclets reading the frame in r31). Never
+# ordinary functions: their __savegprlr/__restgprlr are elided and a `bl` caller copies their clobbered registers
+# back (masseffect-nx crashed at start-up that way). Run on code generated with this file:
+#   python tools/read_before_write.py app/generated/default             (non-volatile registers)
+#   python tools/read_before_write.py app/generated/default --volatile  (r0/r2/r11/r12/f0/v32-v63)
+[functions]
+# tools/read_before_write.py on code generated with the options above (2026-10-22), everything it lists:
+#   non-volatile: sub_823232F8 r18, sub_823923D4 r25 (a one-instruction fragment), sub_823D632C r29,
+#     sub_823E73CC r30: fragments/funclets that read their parent's frame register -> marked.
+#     sub_822B1DF0, sub_822B2180 r30: `xor r30,r30,r30`, the value is not used -> not marked.
+#     sub_82380B80 cr1-cr7: mfcr into a jmp_buf (setjmp) -> not marked.
+#   volatile: sub_820C2340 f0/r11, sub_82269FE0 r11 (entered with r11 set), sub_82486EB4 r12 (stack probe:
+#     size in r12) -> marked.
+"0x823232F8" = { share_registers = true }
+"0x823923D4" = { share_registers = true }
+"0x823D632C" = { share_registers = true }
+"0x823E73CC" = { share_registers = true }
+"0x820C2340" = { share_registers = true }
+# "0x82269FE0" (r11): only its jump-table entry 10 reads r11 (8226A030 -> stw r11), an entry past the real cases
+# (its callers pass r7 0 or 1). Marked, its clobbered r29-r31 were copied back into the caller sub_82257D88 with
+# non_volatile_as_local: a NULL lua_State read at start-up -> not marked.
+"0x82486EB4" = { share_registers = true }
+# SEH funclets of sub_822B5788 (its scope table at 0x820A2268; see overrides.toml) and the termination handler they
+# call: the exception dispatcher enters them with the parent's frame in r31, and sub_822B5FF0 reads r12 and the
+# parent's r21. read_before_write.py misses them (their prologue stores the register first). Without the marks,
+# r21 is a zeroed local: a read of guest 0x60 at start-up (PC build, 2026-10-22).
+"0x822B5F9C" = { share_registers = true }
+"0x822B5FAC" = { share_registers = true }
+"0x822B5FB8" = { share_registers = true }
+"0x822B5FF0" = { share_registers = true }
+# Bink video (hand-written VMX leaves): they start with `vor128 vN,v69,v69` / `vor128 vN,v72,v72` (sub_824A6190:
+# v64/v65), constants their caller keeps in those registers across the calls. read_before_write.py files them under
+# "store-only (ignored)" (the copy is a simde store). Without the marks every movie decoded to green blocks with
+# non_volatile_as_local (PC build, 2026-10-22). Leaves without saved registers, so the mark is safe.
+"0x82472B58" = { share_registers = true }
+"0x82473190" = { share_registers = true }
+"0x824A4A38" = { share_registers = true }
+"0x824A4DE0" = { share_registers = true }
+"0x824A50A0" = { share_registers = true }
+"0x824A5308" = { share_registers = true }
+"0x824A6190" = { share_registers = true }
+# ... and where those registers come from: sub_824C80C0 saves v64-v127 to r4 and loads Bink's constant table from r3
+# into them; sub_824C8408 restores them (callers sub_824C7CD0 and three more). Unmarked, the loads went into the
+# helper's own locals. Leaves.
+"0x824C80C0" = { share_registers = true }
+"0x824C8408" = { share_registers = true }

@@ -1,0 +1,285 @@
+
+============================================================
+  HUECOS DE CODIGO SIN FUNCION ASIGNADA
+============================================================
+Funciones            : 14613
+Huecos totales       : 7074
+Huecos >= 8 bytes    : 160
+Bytes en huecos      : 45628
+
+Distribucion por tamano de hueco:
+       4 bytes  x 6914
+       8 bytes  x 11
+      12 bytes  x 50
+      16 bytes  x 13
+      20 bytes  x 9
+      24 bytes  x 8
+      28 bytes  x 4
+      32 bytes  x 12
+      36 bytes  x 2
+      40 bytes  x 5
+      44 bytes  x 2
+      48 bytes  x 6
+      52 bytes  x 4
+      56 bytes  x 1
+      60 bytes  x 1
+      72 bytes  x 1
+      88 bytes  x 1
+      96 bytes  x 1
+     112 bytes  x 1
+     152 bytes  x 1
+     168 bytes  x 1
+     196 bytes  x 1
+     204 bytes  x 1
+     212 bytes  x 1
+     224 bytes  x 5
+     228 bytes  x 1
+     276 bytes  x 1
+     288 bytes  x 1
+     308 bytes  x 1
+     344 bytes  x 1
+     356 bytes  x 1
+     392 bytes  x 1
+     412 bytes  x 2
+     420 bytes  x 1
+     440 bytes  x 1
+     576 bytes  x 1
+     580 bytes  x 1
+     712 bytes  x 1
+     716 bytes  x 1
+    1020 bytes  x 1
+    1372 bytes  x 1
+    3964 bytes  x 1
+
+------------------------------------------------------------
+Direcciones consultadas:
+  0x82297618  inicio de funcion: NO
+      cae en hueco de 16 bytes: 0x82297610 - 0x82297620
+      (tras la funcion 0x82297608, antes de 0x82297620)
+
+------------------------------------------------------------
+Primeros 60 huecos de >= 8 bytes:
+  0x821126CC     12 bytes   (tras 0x821126CC, antes de 0x821126D8)
+  0x821AECBC     12 bytes   (tras 0x821AECBC, antes de 0x821AECC8)
+  0x821AED5C      8 bytes   (tras 0x821AED58, antes de 0x821AED64)
+  0x8223E880      8 bytes   (tras 0x8223E868, antes de 0x8223E888)
+  0x82296490      8 bytes   (tras 0x82296488, antes de 0x82296498)
+  0x82296558     16 bytes   (tras 0x82296548, antes de 0x82296568)
+  0x822975D8      8 bytes   (tras 0x822975D0, antes de 0x822975E0)
+  0x82297610     16 bytes   (tras 0x82297608, antes de 0x82297620)
+  0x8229C038     36 bytes   (tras 0x8229BFF0, antes de 0x8229C05C)
+  0x8229C080     28 bytes   (tras 0x8229C05C, antes de 0x8229C09C)
+  0x822B548C     12 bytes   (tras 0x822B548C, antes de 0x822B5498)
+  0x822B5FC4     12 bytes   (tras 0x822B5F8C, antes de 0x822B5FD0)
+  0x822CEC2C   1020 bytes   (tras 0x822CE9A0, antes de 0x822CF028)
+  0x822D6A70     16 bytes   (tras 0x822D6A68, antes de 0x822D6A80)
+  0x822DE114     60 bytes   (tras 0x822DDD20, antes de 0x822DE150)
+  0x822DFAF4     20 bytes   (tras 0x822DFAF0, antes de 0x822DFB08)
+  0x822FA33C     12 bytes   (tras 0x822FA33C, antes de 0x822FA348)
+  0x822FA3F4     12 bytes   (tras 0x822FA3F4, antes de 0x822FA400)
+  0x822FB5CC     16 bytes   (tras 0x822FB538, antes de 0x822FB5DC)
+  0x822FB5F0     32 bytes   (tras 0x822FB5DC, antes de 0x822FB610)
+  0x8230A210     96 bytes   (tras 0x82309F60, antes de 0x8230A270)
+  0x82312678     32 bytes   (tras 0x82312668, antes de 0x82312698)
+  0x823127A0     32 bytes   (tras 0x8231278C, antes de 0x823127C0)
+  0x823128D8     24 bytes   (tras 0x823128C0, antes de 0x823128F0)
+  0x823134C0     48 bytes   (tras 0x823132E0, antes de 0x823134F0)
+  0x823180F0     32 bytes   (tras 0x82317EB8, antes de 0x82318110)
+  0x82318228     24 bytes   (tras 0x8231820C, antes de 0x82318240)
+  0x82318880     32 bytes   (tras 0x823187D0, antes de 0x823188A0)
+  0x8231B6A0     32 bytes   (tras 0x8231B668, antes de 0x8231B6C0)
+  0x8231FEE0     16 bytes   (tras 0x8231FEDC, antes de 0x8231FEF0)
+  0x82323308     32 bytes   (tras 0x823232F8, antes de 0x82323328)
+  0x823319A4     20 bytes   (tras 0x823314F0, antes de 0x823319B8)
+  0x82338668     88 bytes   (tras 0x82338450, antes de 0x823386C0)
+  0x8233CE54     52 bytes   (tras 0x8233CDD0, antes de 0x8233CE88)
+  0x8233E9E0     16 bytes   (tras 0x8233E9CC, antes de 0x8233E9F0)
+  0x82340E28     32 bytes   (tras 0x82340D38, antes de 0x82340E48)
+  0x82346AB0     24 bytes   (tras 0x82346AAC, antes de 0x82346AC8)
+  0x82347328     16 bytes   (tras 0x82347324, antes de 0x82347338)
+  0x82347F7C     12 bytes   (tras 0x82347E38, antes de 0x82347F88)
+  0x82347F94     20 bytes   (tras 0x82347F88, antes de 0x82347FA8)
+  0x823482A0     72 bytes   (tras 0x82347FA8, antes de 0x823482E8)
+  0x8234FE34    308 bytes   (tras 0x8234FD60, antes de 0x8234FF68)
+  0x823500EC    356 bytes   (tras 0x82350018, antes de 0x82350250)
+  0x82351FA0     32 bytes   (tras 0x82351D20, antes de 0x82351FC0)
+  0x823530C4   1372 bytes   (tras 0x82352428, antes de 0x82353620)
+  0x823537A0     24 bytes   (tras 0x82353620, antes de 0x823537B8)
+  0x8235399C    228 bytes   (tras 0x82353820, antes de 0x82353A80)
+  0x82353C18    224 bytes   (tras 0x82353A80, antes de 0x82353CF8)
+  0x82353DB0    224 bytes   (tras 0x82353CF8, antes de 0x82353E90)
+  0x823540FC    204 bytes   (tras 0x82353E90, antes de 0x823541C8)
+  0x823560E0     32 bytes   (tras 0x823560DC, antes de 0x82356100)
+  0x8235BF54     52 bytes   (tras 0x8235BF4C, antes de 0x8235BF88)
+  0x8235F25C     12 bytes   (tras 0x8235F250, antes de 0x8235F268)
+  0x823638D0    576 bytes   (tras 0x82362058, antes de 0x82363B10)
+  0x82364298     40 bytes   (tras 0x82364280, antes de 0x823642C0)
+  0x8236BABC     16 bytes   (tras 0x8236BA28, antes de 0x8236BACC)
+  0x8236BADC     20 bytes   (tras 0x8236BACC, antes de 0x8236BAF0)
+  0x8236BEDC    212 bytes   (tras 0x8236BBE8, antes de 0x8236BFB0)
+  0x8236BFF0      8 bytes   (tras 0x8236BFD0, antes de 0x8236BFF8)
+  0x823705FC    580 bytes   (tras 0x8236F6A0, antes de 0x82370840)
+  ... y 100 mas
+
+------------------------------------------------------------
+TODOS los huecos >= 8 bytes:
+  0x821126CC     12 bytes   (tras 0x821126CC, antes de 0x821126D8)
+  0x821AECBC     12 bytes   (tras 0x821AECBC, antes de 0x821AECC8)
+  0x821AED5C      8 bytes   (tras 0x821AED58, antes de 0x821AED64)
+  0x8223E880      8 bytes   (tras 0x8223E868, antes de 0x8223E888)
+  0x82296490      8 bytes   (tras 0x82296488, antes de 0x82296498)
+  0x82296558     16 bytes   (tras 0x82296548, antes de 0x82296568)
+  0x822975D8      8 bytes   (tras 0x822975D0, antes de 0x822975E0)
+  0x82297610     16 bytes   (tras 0x82297608, antes de 0x82297620)
+  0x8229C038     36 bytes   (tras 0x8229BFF0, antes de 0x8229C05C)
+  0x8229C080     28 bytes   (tras 0x8229C05C, antes de 0x8229C09C)
+  0x822B548C     12 bytes   (tras 0x822B548C, antes de 0x822B5498)
+  0x822B5FC4     12 bytes   (tras 0x822B5F8C, antes de 0x822B5FD0)
+  0x822CEC2C   1020 bytes   (tras 0x822CE9A0, antes de 0x822CF028)
+  0x822D6A70     16 bytes   (tras 0x822D6A68, antes de 0x822D6A80)
+  0x822DE114     60 bytes   (tras 0x822DDD20, antes de 0x822DE150)
+  0x822DFAF4     20 bytes   (tras 0x822DFAF0, antes de 0x822DFB08)
+  0x822FA33C     12 bytes   (tras 0x822FA33C, antes de 0x822FA348)
+  0x822FA3F4     12 bytes   (tras 0x822FA3F4, antes de 0x822FA400)
+  0x822FB5CC     16 bytes   (tras 0x822FB538, antes de 0x822FB5DC)
+  0x822FB5F0     32 bytes   (tras 0x822FB5DC, antes de 0x822FB610)
+  0x8230A210     96 bytes   (tras 0x82309F60, antes de 0x8230A270)
+  0x82312678     32 bytes   (tras 0x82312668, antes de 0x82312698)
+  0x823127A0     32 bytes   (tras 0x8231278C, antes de 0x823127C0)
+  0x823128D8     24 bytes   (tras 0x823128C0, antes de 0x823128F0)
+  0x823134C0     48 bytes   (tras 0x823132E0, antes de 0x823134F0)
+  0x823180F0     32 bytes   (tras 0x82317EB8, antes de 0x82318110)
+  0x82318228     24 bytes   (tras 0x8231820C, antes de 0x82318240)
+  0x82318880     32 bytes   (tras 0x823187D0, antes de 0x823188A0)
+  0x8231B6A0     32 bytes   (tras 0x8231B668, antes de 0x8231B6C0)
+  0x8231FEE0     16 bytes   (tras 0x8231FEDC, antes de 0x8231FEF0)
+  0x82323308     32 bytes   (tras 0x823232F8, antes de 0x82323328)
+  0x823319A4     20 bytes   (tras 0x823314F0, antes de 0x823319B8)
+  0x82338668     88 bytes   (tras 0x82338450, antes de 0x823386C0)
+  0x8233CE54     52 bytes   (tras 0x8233CDD0, antes de 0x8233CE88)
+  0x8233E9E0     16 bytes   (tras 0x8233E9CC, antes de 0x8233E9F0)
+  0x82340E28     32 bytes   (tras 0x82340D38, antes de 0x82340E48)
+  0x82346AB0     24 bytes   (tras 0x82346AAC, antes de 0x82346AC8)
+  0x82347328     16 bytes   (tras 0x82347324, antes de 0x82347338)
+  0x82347F7C     12 bytes   (tras 0x82347E38, antes de 0x82347F88)
+  0x82347F94     20 bytes   (tras 0x82347F88, antes de 0x82347FA8)
+  0x823482A0     72 bytes   (tras 0x82347FA8, antes de 0x823482E8)
+  0x8234FE34    308 bytes   (tras 0x8234FD60, antes de 0x8234FF68)
+  0x823500EC    356 bytes   (tras 0x82350018, antes de 0x82350250)
+  0x82351FA0     32 bytes   (tras 0x82351D20, antes de 0x82351FC0)
+  0x823530C4   1372 bytes   (tras 0x82352428, antes de 0x82353620)
+  0x823537A0     24 bytes   (tras 0x82353620, antes de 0x823537B8)
+  0x8235399C    228 bytes   (tras 0x82353820, antes de 0x82353A80)
+  0x82353C18    224 bytes   (tras 0x82353A80, antes de 0x82353CF8)
+  0x82353DB0    224 bytes   (tras 0x82353CF8, antes de 0x82353E90)
+  0x823540FC    204 bytes   (tras 0x82353E90, antes de 0x823541C8)
+  0x823560E0     32 bytes   (tras 0x823560DC, antes de 0x82356100)
+  0x8235BF54     52 bytes   (tras 0x8235BF4C, antes de 0x8235BF88)
+  0x8235F25C     12 bytes   (tras 0x8235F250, antes de 0x8235F268)
+  0x823638D0    576 bytes   (tras 0x82362058, antes de 0x82363B10)
+  0x82364298     40 bytes   (tras 0x82364280, antes de 0x823642C0)
+  0x8236BABC     16 bytes   (tras 0x8236BA28, antes de 0x8236BACC)
+  0x8236BADC     20 bytes   (tras 0x8236BACC, antes de 0x8236BAF0)
+  0x8236BEDC    212 bytes   (tras 0x8236BBE8, antes de 0x8236BFB0)
+  0x8236BFF0      8 bytes   (tras 0x8236BFD0, antes de 0x8236BFF8)
+  0x823705FC    580 bytes   (tras 0x8236F6A0, antes de 0x82370840)
+  0x8237B090     40 bytes   (tras 0x8237AAB8, antes de 0x8237B0B8)
+  0x8237BB70     56 bytes   (tras 0x8237B288, antes de 0x8237BBA8)
+  0x8237C2D8     32 bytes   (tras 0x8237C2C0, antes de 0x8237C2F8)
+  0x8237D4A8      8 bytes   (tras 0x8237D4A8, antes de 0x8237D4B0)
+  0x8237D944     12 bytes   (tras 0x8237D944, antes de 0x8237D950)
+  0x82380638      8 bytes   (tras 0x82380638, antes de 0x82380640)
+  0x823817CC     12 bytes   (tras 0x823817CC, antes de 0x823817D8)
+  0x823819DC     12 bytes   (tras 0x823819DC, antes de 0x823819E8)
+  0x82381D54     12 bytes   (tras 0x82381D54, antes de 0x82381D60)
+  0x823824B4     12 bytes   (tras 0x823824B4, antes de 0x823824C0)
+  0x82382824     12 bytes   (tras 0x82382824, antes de 0x82382830)
+  0x82382D6C     12 bytes   (tras 0x82382D6C, antes de 0x82382D78)
+  0x8238314C     12 bytes   (tras 0x8238314C, antes de 0x82383158)
+  0x823859E8      8 bytes   (tras 0x823859E8, antes de 0x823859F0)
+  0x823860DC     12 bytes   (tras 0x823860DC, antes de 0x823860E8)
+  0x823864AC     12 bytes   (tras 0x823864AC, antes de 0x823864B8)
+  0x82386EB4     12 bytes   (tras 0x82386EB4, antes de 0x82386EC0)
+  0x8238747C     12 bytes   (tras 0x8238747C, antes de 0x82387488)
+  0x8238783C     12 bytes   (tras 0x8238783C, antes de 0x82387848)
+  0x823881DC     12 bytes   (tras 0x823881DC, antes de 0x823881E8)
+  0x82389704     12 bytes   (tras 0x82389704, antes de 0x82389710)
+  0x8238BAA4     12 bytes   (tras 0x8238BAA4, antes de 0x8238BAB0)
+  0x8238BD54     12 bytes   (tras 0x8238BD54, antes de 0x8238BD60)
+  0x8238CA14     12 bytes   (tras 0x8238CA14, antes de 0x8238CA20)
+  0x8238D504     12 bytes   (tras 0x8238D504, antes de 0x8238D510)
+  0x8238D8EC     12 bytes   (tras 0x8238D8EC, antes de 0x8238D8F8)
+  0x8238DFD4     12 bytes   (tras 0x8238DFD4, antes de 0x8238DFE0)
+  0x8238EDA4     12 bytes   (tras 0x8238EDA4, antes de 0x8238EDB0)
+  0x8238EFCC     12 bytes   (tras 0x8238EFCC, antes de 0x8238EFD8)
+  0x8238F14C     12 bytes   (tras 0x8238F14C, antes de 0x8238F158)
+  0x8238FA84     12 bytes   (tras 0x8238FA84, antes de 0x8238FA90)
+  0x8238FFFC     12 bytes   (tras 0x8238FFFC, antes de 0x82390008)
+  0x823902FC     12 bytes   (tras 0x823902FC, antes de 0x82390308)
+  0x823909F4     12 bytes   (tras 0x823909F4, antes de 0x82390A00)
+  0x82390FF8      8 bytes   (tras 0x82390FF8, antes de 0x82391000)
+  0x8239123C     12 bytes   (tras 0x8239123C, antes de 0x82391248)
+  0x82391BBC     12 bytes   (tras 0x82391BBC, antes de 0x82391BC8)
+  0x82391CE4     12 bytes   (tras 0x82391CE4, antes de 0x82391CF0)
+  0x82392328      8 bytes   (tras 0x82392328, antes de 0x82392330)
+  0x823A76A0     16 bytes   (tras 0x823A764C, antes de 0x823A76B0)
+  0x823A8A2C     12 bytes   (tras 0x823A8A2C, antes de 0x823A8A38)
+  0x823A8DEC     12 bytes   (tras 0x823A8B38, antes de 0x823A8DF8)
+  0x823A8EB4     12 bytes   (tras 0x823A8EB4, antes de 0x823A8EC0)
+  0x823A9900     12 bytes   (tras 0x823A9538, antes de 0x823A990C)
+  0x823A9ED4     12 bytes   (tras 0x823A9ED4, antes de 0x823A9EE0)
+  0x823A9F7C     12 bytes   (tras 0x823A9F7C, antes de 0x823A9F88)
+  0x823AA494     12 bytes   (tras 0x823AA494, antes de 0x823AA4A0)
+  0x823AE4EC    196 bytes   (tras 0x823AE1E0, antes de 0x823AE5B0)
+  0x823AE6A4     52 bytes   (tras 0x823AE5B0, antes de 0x823AE6D8)
+  0x823AE8A0      8 bytes   (tras 0x823AE810, antes de 0x823AE8A8)
+  0x823AE8B0     48 bytes   (tras 0x823AE8A8, antes de 0x823AE8E0)
+  0x823AEAEC    716 bytes   (tras 0x823AE8E0, antes de 0x823AEDB8)
+  0x823AEF00    712 bytes   (tras 0x823AEE60, antes de 0x823AF1C8)
+  0x823AFA90     16 bytes   (tras 0x823AFA80, antes de 0x823AFAA0)
+  0x823B10BC     28 bytes   (tras 0x823B0EA8, antes de 0x823B10D8)
+  0x823B2A54     12 bytes   (tras 0x823B2A50, antes de 0x823B2A60)
+  0x823B2E88    288 bytes   (tras 0x823B2E68, antes de 0x823B2FA8)
+  0x823BC508     16 bytes   (tras 0x823BC4F4, antes de 0x823BC518)
+  0x823BFA34     20 bytes   (tras 0x823BFA1C, antes de 0x823BFA48)
+  0x823C2AD8     24 bytes   (tras 0x823C21B8, antes de 0x823C2AF0)
+  0x823C50FC     12 bytes   (tras 0x823C50FC, antes de 0x823C5108)
+  0x823C5B00     24 bytes   (tras 0x823C5AF4, antes de 0x823C5B18)
+  0x823CC99C     16 bytes   (tras 0x823CC810, antes de 0x823CC9AC)
+  0x823CCCF8     24 bytes   (tras 0x823CCCEC, antes de 0x823CCD10)
+  0x823CF4D8     48 bytes   (tras 0x823CF3A8, antes de 0x823CF508)
+  0x823CF54C     12 bytes   (tras 0x823CF508, antes de 0x823CF558)
+  0x823D6438    112 bytes   (tras 0x823D632C, antes de 0x823D64A8)
+  0x823D7BEC     28 bytes   (tras 0x823D78B8, antes de 0x823D7C08)
+  0x823DC884     28 bytes   (tras 0x823DC874, antes de 0x823DC8A0)
+  0x823DE0C0    152 bytes   (tras 0x823DE084, antes de 0x823DE158)
+  0x823DFA40    224 bytes   (tras 0x823DE9C0, antes de 0x823DFB20)
+  0x823E03CC     20 bytes   (tras 0x823E03A4, antes de 0x823E03E0)
+  0x823E0B50     24 bytes   (tras 0x823E0B44, antes de 0x823E0B68)
+  0x823E508C     20 bytes   (tras 0x823E5078, antes de 0x823E50A0)
+  0x823E6254     52 bytes   (tras 0x823E6248, antes de 0x823E6288)
+  0x823E7420     12 bytes   (tras 0x823E7388, antes de 0x823E742C)
+  0x823E7438     40 bytes   (tras 0x823E742C, antes de 0x823E7460)
+  0x823F8500     40 bytes   (tras 0x823F84F4, antes de 0x823F8528)
+  0x8240B9B0    224 bytes   (tras 0x8240B128, antes de 0x8240BA90)
+  0x8240C1C0    224 bytes   (tras 0x8240BA90, antes de 0x8240C2A0)
+  0x8240E984     20 bytes   (tras 0x8240E974, antes de 0x8240E998)
+  0x824251E0    168 bytes   (tras 0x82424CF0, antes de 0x82425288)
+  0x82436CBC     36 bytes   (tras 0x824364F8, antes de 0x82436CE0)
+  0x8243EBA8     48 bytes   (tras 0x8243EB98, antes de 0x8243EBD8)
+  0x8243EED0     48 bytes   (tras 0x8243EEC0, antes de 0x8243EF00)
+  0x824850DC     20 bytes   (tras 0x824848F0, antes de 0x824850F0)
+  0x82485958     16 bytes   (tras 0x824850F0, antes de 0x82485968)
+  0x82489484   3964 bytes   (tras 0x82489470, antes de 0x8248A400)
+  0x824A2264    412 bytes   (tras 0x824A2264, antes de 0x824A2400)
+  0x824A3F78     40 bytes   (tras 0x824A3938, antes de 0x824A3FA0)
+  0x824A44B4     44 bytes   (tras 0x824A3FA0, antes de 0x824A44E0)
+  0x824A4A0C     44 bytes   (tras 0x824A44E0, antes de 0x824A4A38)
+  0x824C02EC    276 bytes   (tras 0x824C02EC, antes de 0x824C0400)
+  0x824C1EA8    344 bytes   (tras 0x824C1EA8, antes de 0x824C2000)
+  0x824C8C5C    420 bytes   (tras 0x824C8C5C, antes de 0x824C8E00)
+  0x824D87B0     48 bytes   (tras 0x824CC790, antes de 0x824D87E0)
+  0x824D9D30     32 bytes   (tras 0x824D87E0, antes de 0x824D9D50)
+  0x824DF664    412 bytes   (tras 0x824D9D50, antes de 0x824DF800)
+  0x824E0A78    392 bytes   (tras 0x824E0A78, antes de 0x824E0C00)
+  0x824E0E48    440 bytes   (tras 0x824E0E48, antes de 0x824E1000)

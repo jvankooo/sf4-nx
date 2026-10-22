@@ -1,0 +1,76 @@
+# Nothing derived from the game is ever committed: its files, the code generated from default.xex, and the
+# binaries built from that code.
+
+# --- Game files ---------------------------------------------------------------
+assets/
+*.xex
+*.xexp
+*.iso
+*.bin
+*.big
+*.bun
+*.viv
+*.nfsp
+
+# --- Generated from the game --------------------------------------------------
+generated/
+app*/generated/
+app*/src/copias_literales/
+app*/src/nfsmw_nativo_resplandor_*_spirv.h
+app_*/
+
+# --- Build output -------------------------------------------------------------
+out/
+build/
+*.nro
+*.nacp
+*.elf
+*.o
+*.obj
+*.a
+*.log
+*.err
+shaders/wasm/out/
+
+# --- Tools --------------------------------------------------------------------
+__pycache__/
+*.pyc
+.vs/
+.vscode/
+
+# --- SF4 port ------------------------------------------------------------------
+# Function tables generated from default.xex (kept locally for reference).
+docs/base_init.cpp
+docs/now_init.cpp
+# The shader library is made from the user's disc (tools/build_shader_library.py).
+*.mesp
+*.mesp.idx
+# Console test logs.
+console-run-logs/
+logs/
+# Microsoft's DirectXShaderCompiler release (tools/README.md says which one to download).
+tools/dxc/
+
+# Third-party sources are fetched by tools/fetch_thirdparty.py; only the files this port changed are tracked.
+/sdk/thirdparty/*
+!/sdk/thirdparty/CMakeLists.txt
+!/sdk/thirdparty/FFmpeg
+/sdk/thirdparty/FFmpeg/*
+!/sdk/thirdparty/FFmpeg/config.h
+!/sdk/thirdparty/FFmpeg/config_switch_aarch64.h
+!/sdk/thirdparty/FFmpeg/config_masseffect_wmv3.h
+!/sdk/thirdparty/FFmpeg/config_nfsmw_wmv3.h
+!/sdk/thirdparty/FFmpeg/libavcodec
+/sdk/thirdparty/FFmpeg/libavcodec/*
+!/sdk/thirdparty/FFmpeg/libavcodec/mdct_template.c
+!/sdk/thirdparty/FFmpeg/libavcodec/fft_template.c
+!/sdk/thirdparty/ffmpeg-overlay
+/sdk/thirdparty/ffmpeg-overlay/*
+!/sdk/thirdparty/ffmpeg-overlay/codec_list.c
+
+# Local credentials and console keys: never commit these.
+credentials.env
+*.keys
+keys.dat
+keys.txt
+.claude/

@@ -1,0 +1,14 @@
+[project]
+name = "sf4"
+sdk_version = "0.10.0"
+game_root = "../assets/game_root"
+
+[entrypoint]
+file_path = "../assets/game_root/default.xex"
+out_directory_path = "generated/default"
+
+# Run tools/codegen.ps1 (rexglue codegen on this file, then the post-codegen steps).
+#   overrides.toml  written by hand: code the automatic function discovery misses, each with its evidence
+#                   (tools/gap_fixpoint.py and tools/runtime_gap_resolver.py add to it)
+#   perf_overrides.toml  code generation options for speed (registers as C++ locals, no lr stores, ...)
+includes = ["overrides.toml", "perf_overrides.toml"]
