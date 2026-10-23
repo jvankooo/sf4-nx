@@ -121,6 +121,10 @@ bool CompareActiveFast();  // masseffect_native_draws.cpp: masseffect_native_com
 REXCVAR_DEFINE_INT32(sf4_native_dump_reads_at_s, 0, "SF4",
                      "Diagnosis: write the resolve read-backs of 0.2 s from this time on into reads/ (raw RGBA)")
     .lifecycle(rex::cvar::Lifecycle::kInitOnly);
+REXCVAR_DEFINE_BOOL(sf4_output_fill_edges, true, "SF4",
+                    "The last column and row of the picture repeat their neighbours: SF4's full-screen fades stop one "
+                    "pixel short of the right and bottom edges (hidden by a TV's overscan), which left a line of an "
+                    "earlier screen around the black frames between scenes");
 REXCVAR_DEFINE_INT32(sf4_native_draw_trace_at_s, 0, "SF4",
                      "Native renderer bring-up: sf4_native_draw_trace starts this many seconds after the first draw")
     .lifecycle(rex::cvar::Lifecycle::kInitOnly);
@@ -2827,6 +2831,13 @@ const std::array<std::pair<const uint32_t*, size_t>, 14> codes_conversion{{
                   r[gr::XE_GPU_REG_RB_DEPTHCONTROL], r[gr::XE_GPU_REG_RB_STENCILREFMASK],
                   r[gr::XE_GPU_REG_PA_SC_WINDOW_OFFSET], r[gr::XE_GPU_REG_PA_SC_WINDOW_SCISSOR_TL],
                   r[gr::XE_GPU_REG_PA_SC_WINDOW_SCISSOR_BR], fetches);
+      REXLOG_INFO("[native] draw trace+++: vtx_cntl {:08X} vte {:08X} su_sc {:08X} vport x {:08X}+{:08X} y {:08X}+{:08X} "
+                  "screen scissor {:08X}-{:08X}",
+                  r[gr::XE_GPU_REG_PA_SU_VTX_CNTL], r[gr::XE_GPU_REG_PA_CL_VTE_CNTL],
+                  r[gr::XE_GPU_REG_PA_SU_SC_MODE_CNTL], r[gr::XE_GPU_REG_PA_CL_VPORT_XSCALE],
+                  r[gr::XE_GPU_REG_PA_CL_VPORT_XOFFSET], r[gr::XE_GPU_REG_PA_CL_VPORT_YSCALE],
+                  r[gr::XE_GPU_REG_PA_CL_VPORT_YOFFSET], r[gr::XE_GPU_REG_PA_SC_SCREEN_SCISSOR_TL],
+                  r[gr::XE_GPU_REG_PA_SC_SCREEN_SCISSOR_BR]);
     }
     if (mode4 && draws_ && draws_->Drawn() == draw_count_before &&
         DrawTouchesTraceTileEDRAM4() && TraceEventEDRAM4(TraceTileEDRAM4()))
@@ -11499,6 +11510,24 @@ const std::array<std::pair<const uint32_t*, size_t>, 14> codes_conversion{{
     dfn_.vkCmdPushConstants(commands_output_[s], layout_pipeline_, VK_SHADER_STAGE_FRAGMENT_BIT, 16,
                             sizeof(bilinear), &bilinear);
     dfn_.vkCmdDraw(commands_output_[s], 4, 1, 0, 0);
+    // sf4_output_fill_edges. SF4's full-screen quads with D3D pixel centers end half a pixel short: the fade to
+    // black between scenes (and the menus' backgrounds) never cover x = 1279 / y = 719, so those keep a line of an
+    // earlier screen, visible around the black frame (on a TV it is in the overscan). The output repeats column
+    // w-2 / row h-2 there: the exact variant reads texel (pixel - displacement), each edge drawn under its scissor.
+    if (pipeline == pipelines_ramp_[1] && width > 2 && height > 2 && REXCVAR_GET(sf4_output_fill_edges)) {
+      const struct {
+        VkRect2D scissor;
+        int32_t displacement[2];
+      } edges[3] = {{{{int32_t(width - 1), 0}, {1, height - 1}}, {1, 0}},
+                    {{{0, int32_t(height - 1)}, {width - 1, 1}}, {0, 1}},
+                    {{{int32_t(width - 1), int32_t(height - 1)}, {1, 1}}, {1, 1}}};
+      for (const auto& edge : edges) {
+        dfn_.vkCmdSetScissor(commands_output_[s], 0, 1, &edge.scissor);
+        dfn_.vkCmdPushConstants(commands_output_[s], layout_pipeline_, VK_SHADER_STAGE_FRAGMENT_BIT, 16,
+                                sizeof(edge.displacement), edge.displacement);
+        dfn_.vkCmdDraw(commands_output_[s], 4, 1, 0, 0);
+      }
+    }
     dfn_.vkCmdEndRenderPass(commands_output_[s]);
     if (from_target) {
       // And nothing submitted later (the next frame draws and clears that image again) writes it before the
