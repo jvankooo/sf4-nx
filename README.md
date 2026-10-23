@@ -18,8 +18,6 @@
 
 <a href="https://buymeacoffee.com/jvkt18"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy me a coffee" height="54"></a>
 
-**Enjoying the fights? ☕ Fuel the next _Hadoken!_**
-
 </div>
 
 <table>
