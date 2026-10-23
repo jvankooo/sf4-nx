@@ -10,13 +10,9 @@
 <link rel="preload" href="assets/fonts/GolosText-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/RussoOne-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23c4151c'/%3E%3Ctext x='32' y='44' font-family='Arial Black,Arial' font-size='30' font-weight='900' text-anchor='middle' fill='%23fff'%3EIV%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="style.css?v=1">
+<link rel="preload" href="assets/bg.webp" as="image">
+<link rel="stylesheet" href="style.css?v=2">
 <style>
-  .hero-title { max-width: 1200px; margin: 0 auto; padding: 40px 22px 8px; }
-  .hero-title h1 { margin: 0; font-family: var(--head); font-size: clamp(1.9rem, 5vw, 3.2rem); letter-spacing: .04em;
-    color: var(--bright); line-height: 1.05; }
-  .hero-title h1 .iv { color: #e0242c; }
-  .hero-title .sub { margin: 6px 0 0; color: var(--orange); font-family: var(--head); letter-spacing: .2em; font-size: .85rem; text-transform: uppercase; }
   .wizard-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .options { margin: 14px 0 4px; display: grid; gap: 8px; }
 </style>
@@ -25,14 +21,20 @@
 <a class="skip-link" href="#main">Skip to content</a>
 
 <header class="hero">
-  <div class="hero-title">
-    <h1>Street Fighter <span class="iv">IV</span></h1>
-    <p class="sub">for Nintendo Switch · installer</p>
-  </div>
-  <div class="hero-row">
-    <p class="hero-description">Prepare the port on your computer, directly in your browser.</p>
-    <div class="hero-tools">
-      <a class="hero-link" id="releases-link" href="#">Releases ↗</a>
+  <div class="hero-inner">
+    <img class="cover" src="assets/cover.webp" width="230" height="230" alt="Street Fighter IV cover art: Ryu and Ken">
+    <div class="hero-text">
+      <p class="kicker">Nintendo Switch · installer</p>
+      <h1 class="title"><span>Street Fighter</span> <span class="iv">IV</span></h1>
+      <p class="hero-description">Make the SD card folder of the Switch port from <strong>your own</strong> Xbox 360 disc.
+        Everything runs in this browser tab: your game files never leave your computer.</p>
+      <ul class="pills" aria-label="Highlights">
+        <li>30 fps locked</li><li>720p menus · 480p fights</li><li>Joy-Con rumble</li><li>Nothing uploaded</li>
+      </ul>
+      <div class="hero-tools">
+        <a class="btn primary" href="#step-source">Get started</a>
+        <a class="btn" id="releases-link" href="#">Releases ↗</a>
+      </div>
     </div>
   </div>
 </header>
@@ -45,10 +47,6 @@
       <li class="wstep pending" data-step="3"><span class="wlabel">Build package</span><span class="sr-only wstate"></span></li>
     </ol>
   </nav>
-  <p class="lead">
-    Make the SD card folder of the Street Fighter IV port from <strong>your own copy</strong> of the Xbox 360 game.
-    Everything runs in this browser tab: <strong>your game files never leave your computer.</strong>
-  </p>
   <div id="env-warning" class="notice warn" hidden></div>
 
   <!-- Step 1 -->
@@ -107,6 +105,11 @@
 
     <div id="result" class="notice" hidden></div>
   </section>
+
+  <div class="shots">
+    <img src="assets/shot1.webp" width="640" height="360" loading="lazy" alt="Ryu against Ken under the bridge">
+    <img src="assets/shot2.webp" width="640" height="360" loading="lazy" alt="Balrog against Dan on the savanna stage">
+  </div>
 
   <section class="card plain" id="how">
     <h2>After it finishes</h2>

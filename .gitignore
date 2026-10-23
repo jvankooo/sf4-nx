@@ -79,3 +79,6 @@ keys.txt
 !installer/assets/
 !shaders/sf4_runtime_containers/*.bin
 !shaders/me/runtime_containers/*.bin
+
+# Source artwork; the web-sized copies are in docs/media/ and installer/assets/.
+/images/
