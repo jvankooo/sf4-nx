@@ -10,8 +10,15 @@
 [![Releases](https://img.shields.io/github/v/release/jvankooo/sf4-nx?style=for-the-badge&color=ffc23d&label=Release&include_prereleases)](https://github.com/jvankooo/sf4-nx/releases)
 [![Platform](https://img.shields.io/badge/Switch-homebrew-e60012?style=for-the-badge&logo=nintendoswitch&logoColor=white)](#install)
 [![License](https://img.shields.io/badge/License-GPL--3.0-555?style=for-the-badge)](LICENSE)
+[![Buy me a coffee](https://img.shields.io/badge/Buy_me_a_coffee-%E2%98%95-ffdd00?style=for-the-badge&logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/jvkt18)
 
 **[Install](#install)** · **[Features](#features)** · **[Settings](#settings)** · **[How it works](#how-it-works)** · **[Build](#building)** · **[Credits](#credits)**
+
+<br>
+
+<a href="https://buymeacoffee.com/jvkt18"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy me a coffee" height="54"></a>
+
+**Enjoying the fights? ☕ Fuel the next _Hadoken!_**
 
 </div>
 
@@ -107,6 +114,13 @@ driver build. [docs/building.md](docs/building.md) walks through every step; [in
 covers the browser installer and its GitHub Pages deployment.
 
 Nothing derived from the game (its files, the generated C++, the shader library or the built NRO) is committed.
+
+## Support
+
+This port took a lot of late nights and frame-by-frame debugging. If it brought SF4 to your Switch, a coffee keeps the
+next update coming:
+
+<a href="https://buymeacoffee.com/jvkt18"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy me a coffee" height="48"></a>
 
 ## Credits
 

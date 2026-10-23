@@ -293,7 +293,7 @@ pre.tree { max-height: none; }
 .credits-list { margin: 8px 0; padding-left: 20px; color: var(--muted); }
 .credits-list li { margin-bottom: 8px; }
 .credits-list em { font-size: .88em; }
-footer { max-width: 900px; margin: 0 auto; padding: 18px 16px 40px; color: var(--muted); font-size: .86rem; text-align: center; border-top: 1px solid var(--line); }
+footer { max-width: 900px; margin: 0 auto; padding: 18px 16px 96px; color: var(--muted); font-size: .86rem; text-align: center; border-top: 1px solid var(--line); }
 
 /* ---- phones -------------------------------------------------------------------------------------------------- */
 @media (max-width: 600px) {
@@ -325,3 +325,22 @@ footer { max-width: 900px; margin: 0 auto; padding: 18px 16px 40px; color: var(-
   *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
   .bar.indeterminate > i { width: 100% !important; transform: none; opacity: .4; }
 }
+
+/* ---- buy me a coffee ----------------------------------------------------------------------------------------- */
+.btn.coffee { color: #1a1300; background: #ffdd00; border-color: #ffdd00; font-weight: 700; box-shadow: 0 6px 22px rgba(255, 221, 0, .3); }
+.btn.coffee:hover:not(:disabled) { color: #1a1300; border-color: #fff3a0; box-shadow: 0 8px 30px rgba(255, 221, 0, .5); transform: translateY(-1px) rotate(-1.5deg); }
+.cup { display: inline-block; margin-right: 6px; transform-origin: 50% 90%; }
+.coffee:hover .cup, .coffee-float:hover .cup { animation: cup-wiggle .5s ease-in-out 2; }
+.coffee-float {
+  position: fixed; right: 22px; bottom: 22px; z-index: 20; display: inline-flex; align-items: center; gap: 2px;
+  padding: 12px 20px 12px 16px; border-radius: 999px; text-decoration: none;
+  font: 700 .95rem/1.2 var(--body); color: #1a1300; background: #ffdd00; border: 2px solid #1a1300;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .5), 0 0 0 4px rgba(255, 221, 0, .25);
+  animation: coffee-nudge 7s ease-in-out 3s infinite;
+  transition: transform .15s, box-shadow .15s;
+}
+.coffee-float .cup { font-size: 1.3rem; }
+.coffee-float b { font-family: var(--head); font-weight: 400; letter-spacing: .02em; }
+.coffee-float:hover { color: #1a1300; transform: translateY(-3px) scale(1.04); box-shadow: 0 14px 36px rgba(0, 0, 0, .55), 0 0 0 6px rgba(255, 221, 0, .35); }
+@keyframes cup-wiggle { 0%, 100% { transform: rotate(0); } 25% { transform: rotate(-14deg); } 75% { transform: rotate(14deg); } }
+@keyframes coffee-nudge { 0%, 88%, 100% { transform: translateY(0); } 91% { transform: translateY(-6px) rotate(-2deg); } 94% { transform: translateY(0); } 97% { transform: translateY(-3px) rotate(2deg); } }
