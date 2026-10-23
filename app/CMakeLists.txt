@@ -137,7 +137,7 @@ if(REXGLUE_PLATFORM_SWITCH)
     endif()
     rexglue_switch_add_nro(sf4
         NAME "Street Fighter IV"
-        AUTHOR "jvkt18"
+        AUTHOR "xbox360"
         VERSION "0.1.0"
         ${SF4_ICONO_ARG})
 endif()
