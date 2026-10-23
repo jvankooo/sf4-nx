@@ -24,6 +24,8 @@ set(SF4_SOURCES
     src/sf4_jobs.cpp
     # 30 frames per second on screen with the game at full speed (sf4_frame_rate).
     src/sf4_framerate.cpp
+    # 3D scene at 480p, menus, movies and HUD at 720p (sf4_scene_480p).
+    src/sf4_resolution.cpp
     # Readable dumps of whole frames of that stream (sf4_frame_dump; off by default).
     src/sf4_frame_decode.cpp
 )

@@ -78,15 +78,15 @@ sf4_frame_rate = 30
 sf4_max_steps_per_frame = 4
 sf4_draw_every_n_frames = 2
 
-# Resolution the game renders at (scaled to the screen). SF4 sizes its 3D scene and effects from the video mode the
-# console reports, and the GPU time follows the pixel count: 854x480 is 45 % of the pixels of 1280x720 (its 3D scene
-# is 640x480), 640x360 is 25 %.
-# 854x480 is the default: the first native console run (854x480) measured the GPU at about 13 ms of work per Swap,
-# 26 ms per drawn frame, two thirds of it the 3D scene. At 1280x720 the scene has 2.25 times the pixels, about
-# 45-50 ms per drawn frame against the 33 ms of 30 fps: the GPU then holds the game back (fights in slow motion).
-# 1280 x 720 is sharper and works, but not at full speed in fights yet.
-video_mode_width = 854
-video_mode_height = 480
+# Resolution. SF4 sizes everything from the video mode the console reports.
+#   1280x720 with sf4_scene_480p = true (the default): menus, movies, the HUD and all text at 1280x720 (sharp), and
+#   only the 3D scene (fights, intros) rendered at 854x480 and scaled up. The console's GPU needs about 22 ms per
+#   drawn frame for the 480p scene, two thirds of it the scene itself; a 720p scene (sf4_scene_480p = false) is about
+#   twice that, more than the 33 ms of 30 fps.
+#   854x480: everything at 480p (the picture of the earlier builds).
+video_mode_width = 1280
+video_mode_height = 720
+sf4_scene_480p = true
 
 # CPU. In fights the game's main thread is what limits the speed (console run 3: 75 % of a core, about 21 ms per game
 # frame against the 16.7 of 60 Hz, sharing its core with the GPU ring thread, which has a higher priority).
