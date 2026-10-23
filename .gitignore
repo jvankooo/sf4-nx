@@ -74,3 +74,8 @@ credentials.env
 keys.dat
 keys.txt
 .claude/
+
+# The installer page's own files (fonts) and the Direct3D runtime shaders (Microsoft's, not the game's).
+!installer/assets/
+!shaders/sf4_runtime_containers/*.bin
+!shaders/me/runtime_containers/*.bin

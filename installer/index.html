@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SF4 for Switch - Installer</title>
+<meta name="description" content="Builds the SD card folder of the Street Fighter IV Nintendo Switch port from your own disc, entirely in your browser.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#04060c">
+<link rel="preload" href="assets/fonts/GolosText-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/RussoOne-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23c4151c'/%3E%3Ctext x='32' y='44' font-family='Arial Black,Arial' font-size='30' font-weight='900' text-anchor='middle' fill='%23fff'%3EIV%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css?v=1">
+<style>
+  .hero-title { max-width: 1200px; margin: 0 auto; padding: 40px 22px 8px; }
+  .hero-title h1 { margin: 0; font-family: var(--head); font-size: clamp(1.9rem, 5vw, 3.2rem); letter-spacing: .04em;
+    color: var(--bright); line-height: 1.05; }
+  .hero-title h1 .iv { color: #e0242c; }
+  .hero-title .sub { margin: 6px 0 0; color: var(--orange); font-family: var(--head); letter-spacing: .2em; font-size: .85rem; text-transform: uppercase; }
+  .wizard-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .options { margin: 14px 0 4px; display: grid; gap: 8px; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="hero">
+  <div class="hero-title">
+    <h1>Street Fighter <span class="iv">IV</span></h1>
+    <p class="sub">for Nintendo Switch · installer</p>
+  </div>
+  <div class="hero-row">
+    <p class="hero-description">Prepare the port on your computer, directly in your browser.</p>
+    <div class="hero-tools">
+      <a class="hero-link" id="releases-link" href="#">Releases ↗</a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <nav class="wizard" aria-label="Installation steps">
+    <ol class="wizard-steps" id="wizard">
+      <li class="wstep active" data-step="1"><span class="wlabel">Game disc</span><span class="sr-only wstate"></span></li>
+      <li class="wstep pending" data-step="2"><span class="wlabel">Edition check</span><span class="sr-only wstate"></span></li>
+      <li class="wstep pending" data-step="3"><span class="wlabel">Build package</span><span class="sr-only wstate"></span></li>
+    </ol>
+  </nav>
+  <p class="lead">
+    Make the SD card folder of the Street Fighter IV port from <strong>your own copy</strong> of the Xbox 360 game.
+    Everything runs in this browser tab: <strong>your game files never leave your computer.</strong>
+  </p>
+  <div id="env-warning" class="notice warn" hidden></div>
+
+  <!-- Step 1 -->
+  <section class="card" id="step-source">
+    <h2><span class="num">1</span> <span>Choose your game</span></h2>
+    <div class="seg" role="radiogroup" aria-label="Game format">
+      <label><input type="radio" name="format" value="iso" checked> <span>Disc image (.iso)</span></label>
+      <label><input type="radio" name="format" value="folder"> <span>Extracted disc (folder)</span></label>
+    </div>
+    <p class="hint" id="format-hint"></p>
+    <div class="drop" id="drop" tabindex="0">
+      <button class="btn" id="pick" type="button">Choose .iso file</button>
+      <span class="or">or drop it here</span>
+    </div>
+    <input id="file-iso" type="file" accept=".iso,.xiso" hidden>
+    <input id="file-folder" type="file" webkitdirectory multiple hidden>
+    <p class="status" id="source-status" role="status"></p>
+  </section>
+
+  <!-- Step 2 -->
+  <section class="card" id="step-edition" hidden>
+    <h2><span class="num">2</span> <span>Detected edition</span></h2>
+    <div id="edition-body"></div>
+  </section>
+
+  <!-- Step 3 -->
+  <section class="card" id="step-create" hidden>
+    <h2><span class="num">3</span> <span>Create the package</span></h2>
+    <div class="options">
+      <label class="check"><input type="checkbox" id="english-only" checked>
+        <span>English only: leave out the other languages' text and the Japanese voices (about 0.4 GB smaller).</span></label>
+      <label class="check"><input type="checkbox" id="keep-japanese"> <span>Keep the Japanese voices (the in-game option to switch a character to Japanese).</span></label>
+    </div>
+    <div id="create-info" class="info"></div>
+    <div class="actions" id="actions">
+      <button class="btn primary" id="create-full" type="button">Create sf4-nx.zip</button>
+      <button class="btn" id="create-update" type="button">Create sf4-nx-update.zip</button>
+    </div>
+    <p class="hint">
+      <strong>First install:</strong> the full zip with the game files. <strong>Update</strong> (a new release): only the program, the settings file
+      and the shaders, to extract over the existing folder. It needs the same disc selected, because the shaders are made from it.
+      The update overwrites <code>sf4.toml</code>: keep a copy if you changed it.
+    </p>
+
+    <div id="progress" class="progress-panel" hidden>
+      <ol class="stages" id="stages"></ol>
+      <div class="row">
+        <span id="elapsed" class="muted"></span>
+        <button class="btn small" id="cancel" type="button">Cancel</button>
+      </div>
+      <details id="log-wrap">
+        <summary><span>Details</span> <span id="log-count" class="muted"></span></summary>
+        <pre id="log" aria-live="off"></pre>
+      </details>
+    </div>
+
+    <div id="result" class="notice" hidden></div>
+  </section>
+
+  <section class="card plain" id="how">
+    <h2>After it finishes</h2>
+    <p>Extract the zip into <code>sdmc:/switch/</code> on the SD card. You get:</p>
+<pre class="tree">/switch/sf4-nx/
+  sf4-nx.nro
+  sf4.toml               (settings)
+  sf4_shaders.mesp       (the game's shaders, made from your disc)
+  sf4_shaders.mesp.idx   (index of the shader file)
+  game_root/             (the files of your disc)</pre>
+    <p>Launch it in title takeover mode: hold <strong>R</strong> while starting any installed game, then pick sf4-nx from the
+      Homebrew Menu (or use a forwarder set to a 39-bit address space). Album/applet mode does not give it enough memory.</p>
+  </section>
+
+  <section class="card plain" id="privacy">
+    <h2>Privacy</h2>
+    <p>
+      The page reads your disc with your browser's own file access, makes the shaders on your computer with WebAssembly and
+      writes the zip to your disk. The only network traffic is loading this page and downloading the build
+      (<code>sf4-nx.nro</code>) and <code>sf4.toml</code> from this site. No game data is uploaded, and there is no tracking.
+      Nothing from the game is distributed with the port.
+    </p>
+  </section>
+
+  <section class="card plain" id="credits">
+    <h2>Credits</h2>
+    <ul class="credits-list">
+      <li><strong>Capcom</strong>: Street Fighter IV. This is an unofficial, non-commercial fan project.</li>
+      <li><strong><a href="https://github.com/StevensND/NFSMW-NX" target="_blank" rel="noopener">StevensND</a></strong>: NFSMW-NX and its browser installer, the model for this page.</li>
+      <li><strong><a href="https://github.com/NebadasSwifty/masseffect-nx" target="_blank" rel="noopener">NebadasSwifty</a></strong>: masseffect-nx, whose native renderer, shader pipeline and installer this port builds on.</li>
+      <li><strong><a href="https://github.com/rexglue/rexglue-sdk" target="_blank" rel="noopener">Tom Clay &amp; ReXGlue SDK</a></strong>: the static recompilation framework for Xbox 360 executables, with portions from Xenia.</li>
+      <li><strong><a href="https://github.com/hedge-dev/XenosRecomp" target="_blank" rel="noopener">hedge-dev</a></strong>: XenosRecomp, the Xenos shader translator.</li>
+      <li><strong><a href="https://github.com/danfromtico/mesa-switch" target="_blank" rel="noopener">danfromtico</a></strong>: mesa-switch, Vulkan (NVK) on Horizon.</li>
+      <li><strong><a href="https://devkitpro.org" target="_blank" rel="noopener">devkitPro</a> &amp; <a href="https://github.com/switchbrew/libnx" target="_blank" rel="noopener">switchbrew</a></strong>: the Switch homebrew toolchain and libnx.</li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  <a id="repo-link" href="#">Source code and releases</a> · by <span id="author"></span> ·
+  <a href="THIRD_PARTY_NOTICES.md">Third-party notices</a> · Not affiliated with Capcom, Microsoft or Nintendo.
+</footer>
+
+<script type="module" src="js/app.js?v=1"></script>
+</body>
+</html>
